@@ -53,6 +53,6 @@ public class AlumniController{
     public Response updatecontact(@QueryParam("id") int id,Alumni alumni){
         Alumni updatedalumni= alumniService.updatedalumnicontact(id,alumni);
         System.out.println("send response");
-        return Response.status(200).entity(updatedalumni).build();
+        return Response.status(200).entity("Success").build();
     }
 }

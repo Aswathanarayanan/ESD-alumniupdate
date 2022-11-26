@@ -16,7 +16,6 @@ public class Alumni {
     @Column(name = "phonenumber")
     private long phno;
 
-
     public Alumni(){
 
     }
