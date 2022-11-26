@@ -15,5 +15,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="show_sql">true</property>
         <mapping class="com.example.esdproject.Bean.Alumni"/>
+        <mapping class="com.example.esdproject.Bean.AlumniEducation"/>
+        <mapping class="com.example.esdproject.Bean.AlumniOrgnisation"/>
+        <mapping class="com.example.esdproject.Bean.Organisation"/>
     </session-factory>
 </hibernate-configuration>

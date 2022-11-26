@@ -13,6 +13,7 @@ public class AlumniService {
         return alumniList;
     }
 
+
     public Boolean add_alumni(Alumni alumni){
         System.out.println(String.valueOf(alumni));
         if(alumniDAO.addAlumni(alumni)) {

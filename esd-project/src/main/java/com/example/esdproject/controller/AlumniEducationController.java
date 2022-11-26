@@ -19,7 +19,7 @@ public class AlumniEducationController {
 //    public Response addeducation(@)
 
     /*
-    api : /api/alumnieducation/update?id={alumniid}&add=true
+    api : /api/alumnieducation/update?id={alumniid}
      */
     @POST
     @Path("/update")

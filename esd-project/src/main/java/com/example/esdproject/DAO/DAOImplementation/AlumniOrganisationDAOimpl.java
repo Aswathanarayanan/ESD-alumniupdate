@@ -1,7 +1,9 @@
 package com.example.esdproject.DAO.DAOImplementation;
 
+import com.example.esdproject.Bean.Alumni;
 import com.example.esdproject.Bean.AlumniEducation;
 import com.example.esdproject.Bean.AlumniOrgnisation;
+import com.example.esdproject.Bean.Organisation;
 import com.example.esdproject.DAO.AlumniOrganisationDAO;
 import com.example.esdproject.Util.HibernetSessionUtil;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -29,15 +31,47 @@ public class AlumniOrganisationDAOimpl implements AlumniOrganisationDAO {
             return false;
         }
     }
-    public AlumniOrgnisation updatealumniorg(Integer id,AlumniOrgnisation alumniOrgnisation){
+    public AlumniOrgnisation updatealumniorg(Integer id,Integer org,AlumniOrgnisation alumniOrgnisation) {
+        try (Session session = HibernetSessionUtil.getSession()) {  // session created got access of hibernate session object
+            Transaction tx = session.beginTransaction();
+            // Transaction tx = session.getTransaction(); // getting the exixitng transaction
+            Alumni alumni1 = session.load(Alumni.class, id);
+            Organisation organisation = session.load(Organisation.class, org);
+            AlumniOrgnisation alumniOrgnisation1 = new AlumniOrgnisation();
+            System.out.println("updateorg" + alumniOrgnisation.getJoingdate() + alumniOrgnisation.getLeavingdate());
+            alumniOrgnisation1.setId(alumniOrgnisation.getId());
+            alumniOrgnisation1.setPosition(alumniOrgnisation.getPosition());
+            alumniOrgnisation1.setAlumni(alumni1);
+            alumniOrgnisation1.setOrganisation(organisation);
+            alumniOrgnisation1.setJoingdate(alumniOrgnisation.getJoingdate());
+            alumniOrgnisation1.setLeavingdate(alumniOrgnisation.getLeavingdate());
+            session.save(alumniOrgnisation1);
+            tx.commit();
+            return alumniOrgnisation1;
+        } catch (HibernateException exception) {
+            System.out.print(exception.getLocalizedMessage());
+            return null;
+        }
+    }
+    public AlumniOrgnisation deletealumniorg(Integer id){
         try (Session session = HibernetSessionUtil.getSession()) {  // session created got access of hibernate session object
             Transaction tx = session.beginTransaction();
             // Transaction tx = session.getTransaction(); // getting the exixitng transaction
             AlumniOrgnisation alumniOrgnisation1 = session.load(AlumniOrgnisation.class, id);
-            System.out.println("contactupdate");
+            session.delete(alumniOrgnisation1);
+            tx.commit();
+            return alumniOrgnisation1;
+        } catch (HibernateException exception) {
+            System.out.print(exception.getLocalizedMessage());
+            return null;
+        }
+    }
+    public AlumniOrgnisation changeorgdetails(Integer id,AlumniOrgnisation alumniOrgnisation) {
+        try (Session session = HibernetSessionUtil.getSession()) {  // session created got access of hibernate session object
+            Transaction tx = session.beginTransaction();
+            // Transaction tx = session.getTransaction(); // getting the exixitng transaction
+            AlumniOrgnisation alumniOrgnisation1 = session.load(AlumniOrgnisation.class, id);
             alumniOrgnisation1.setPosition(alumniOrgnisation.getPosition());
-            alumniOrgnisation1.setAlumni(alumniOrgnisation.getAlumni());
-            alumniOrgnisation1.setOrganisation(alumniOrgnisation.getOrganisation());
             alumniOrgnisation1.setJoingdate(alumniOrgnisation.getJoingdate());
             alumniOrgnisation1.setLeavingdate(alumniOrgnisation.getLeavingdate());
             session.update(alumniOrgnisation1);

@@ -51,6 +51,7 @@ public class AlumniOrgnisation {
         this.organisation=organisation;
     }
 
+    public Integer getId(){return this.id;}
     public String getPosition(){return this.position;}
     public String getJoingdate(){return this.joingdate;}
     public String getLeavingdate(){return this.leavingdate;}

@@ -25,9 +25,9 @@ public class AlumniEducation {
     @Column(name = "address")
     private String address;
 
-//    @ManyToOne
-//    @JoinColumn(name = "alumniid")
-//    private Alumni alumni;
+    @ManyToOne
+    @JoinColumn(name = "alumniid")
+    private Alumni alumni;
 
     public void setId(Integer id){
         this.id=id;
@@ -35,7 +35,7 @@ public class AlumniEducation {
     public void setAddress(String address){
         this.address=address;
     }
-    public void setDegree(String address){
+    public void setDegree(String degree){
         this.degree=degree;
     }
     public void setPassingyear(Integer passingyear){
@@ -47,9 +47,9 @@ public class AlumniEducation {
     public void setCollegename(String collegename){
         this.collegename=collegename;
     }
-//    public void setAlumni(Alumni alumni){
-//        this.alumni=alumni;
-//    }
+    public void setAlumni(Alumni alumni){
+        this.alumni=alumni;
+    }
 
     public String getAddress(){
         return this.address;
@@ -66,7 +66,7 @@ public class AlumniEducation {
     public String getCollegename(){
         return this.collegename;
     }
-//    public Alumni getAlumni(){
-//        return this.alumni;
-//    }
+    public Alumni getAlumni(){
+        return this.alumni;
+    }
 }

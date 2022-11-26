@@ -33,16 +33,16 @@ public class AlumniEducationDAOimpl implements AlumniEducationDAO {
     public AlumniEducation updateeducation(Integer id,AlumniEducation alumniEducation){
         try (Session session = HibernetSessionUtil.getSession()) {  // session created got access of hibernate session object
             Transaction tx = session.beginTransaction();
-            //Alumni alumni = session.load(Alumni.class, id);
-            AlumniEducation alumniEducation1=new AlumniEducation();
-            System.out.println("educationupdate");
-            alumniEducation1.setAddress(alumniEducation.getAddress());
-            alumniEducation1.setCollegename(alumniEducation.getCollegename());
-            //alumniEducation.setAlumni(alumni);
-            alumniEducation1.setDegree(alumniEducation.getDegree());
-            alumniEducation1.setJoiningyear(alumniEducation.getJoiningyear());
-            alumniEducation1.setPassingyear(alumniEducation.getPassingyear());
-            session.save(alumniEducation1);
+            Alumni alumni = session.load(Alumni.class, id);
+            //AlumniEducation alumniEducation1=new AlumniEducation();
+            System.out.println("educationupdate"+alumniEducation.getPassingyear()+alumniEducation.getCollegename());
+//            alumniEducation1.setAddress(alumniEducation.getAddress());
+//            alumniEducation1.setCollegename(alumniEducation.getCollegename());
+            alumniEducation.setAlumni(alumni);
+//            alumniEducation1.setDegree(alumniEducation.getDegree());
+//            alumniEducation1.setJoiningyear(alumniEducation.getJoiningyear());
+//            alumniEducation1.setPassingyear(alumniEducation.getPassingyear());
+            session.save(alumniEducation);
             tx.commit();
             return alumniEducation;
         } catch (HibernateException exception) {
