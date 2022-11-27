@@ -1,5 +1,6 @@
 package com.example.esdproject.Bean;
 
+import jakarta.enterprise.inject.Default;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 @Table(name = "alumnieducation")
 public class AlumniEducation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

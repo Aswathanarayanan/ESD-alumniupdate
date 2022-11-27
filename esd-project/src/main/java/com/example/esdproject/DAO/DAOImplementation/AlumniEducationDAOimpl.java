@@ -35,7 +35,7 @@ public class AlumniEducationDAOimpl implements AlumniEducationDAO {
             Transaction tx = session.beginTransaction();
             Alumni alumni = session.load(Alumni.class, id);
             //AlumniEducation alumniEducation1=new AlumniEducation();
-            System.out.println("educationupdate"+alumniEducation.getPassingyear()+alumniEducation.getCollegename());
+            System.out.println("educationupdate"+alumniEducation.getPassingyear()+alumniEducation.getJoiningyear());
 //            alumniEducation1.setAddress(alumniEducation.getAddress());
 //            alumniEducation1.setCollegename(alumniEducation.getCollegename());
             alumniEducation.setAlumni(alumni);

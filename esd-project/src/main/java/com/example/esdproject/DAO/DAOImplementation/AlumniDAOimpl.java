@@ -78,4 +78,25 @@ public class AlumniDAOimpl implements AlumniDAO {
             return null;
         }
     }
+    public Alumni loginalumni(Alumni alumni){
+        try (Session session = HibernetSessionUtil.getSession()) {
+            Alumni alumni1 = new Alumni();
+            String e = alumni.getEmail();
+            String p =alumni.getPassword();
+            System.out.println(e);
+            List<Object> res= new ArrayList<>(session.createQuery("FROM Alumni WHERE email = :e AND password = :p")
+                    .setParameter("e",e)
+                    .setParameter("p",p)
+                    .list());
+            if (res.size()==0)
+                return null;
+            alumni1=(Alumni) res.get(0);
+            System.out.println(alumni1.getId());
+            return (Alumni) res.get(0);
+        }
+        catch (HibernateException exception) {
+            System.out.print(exception.getLocalizedMessage());
+            return null;
+        }
+    }
 }

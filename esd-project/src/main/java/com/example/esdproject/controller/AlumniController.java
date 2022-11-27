@@ -20,6 +20,18 @@ public class AlumniController{
         System.out.println("send response");
         return Response.status(200).entity(alumniList).build();
     }
+
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loginalumni(Alumni alumni){
+        Alumni alumni1= alumniService.loginalumni(alumni);
+        if(alumni1!=null)
+            return Response.status(200).entity(alumni1).build();
+        return Response.status(400).build();
+    }
+
     @POST
     @Path("/set")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -28,7 +40,7 @@ public class AlumniController{
             if(alumniService.add_alumni(alu)){
                 return Response.status(200).entity("Success").build();
         }
-        return Response.status(400).entity("Failure while adding department").build();
+        return Response.status(400).entity("Failure").build();
     }
 
     /*

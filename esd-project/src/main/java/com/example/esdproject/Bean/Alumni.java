@@ -10,28 +10,34 @@ public class Alumni {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
     @Column(name = "phonenumber")
-    private long phno;
+    private String phno;
+
+    @Column(name = "password")
+    private String password;
 
     public Alumni(){
 
     }
-    public Alumni(int i,String e,long p){
+    public Alumni(int i,String e,String p,String password){
         this.phno=p;
         this.email=e;
         this.id=i;
+        this.password=password;
     }
     public void setEmail(String e){this.email=e;}
-    public void setPhno(Long p){this.phno=p;}
+    public void setPhno(String p){this.phno=p;}
     public void setId(int i){this.id=i;}
 
-    public int getId(){return id;}
-    public String getEmail(){return email;}
+    public void setPassword(String password){this.password=password;}
+    public int getId(){return this.id;}
+    public String getEmail(){return this.email;}
 
-    public long getPhno() {
-        return phno;
+    public String getPhno() {
+        return this.phno;
     }
+    public String getPassword(){ return this.password;}
 }

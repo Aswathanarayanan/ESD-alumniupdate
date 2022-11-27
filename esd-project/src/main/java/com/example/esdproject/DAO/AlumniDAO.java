@@ -10,4 +10,5 @@ public interface AlumniDAO {
     Alumni getalumnidetailsid(Integer id);
 
     Alumni updatealumicontact(Integer id,Alumni alumni);
+    Alumni loginalumni(Alumni alumni);
 }

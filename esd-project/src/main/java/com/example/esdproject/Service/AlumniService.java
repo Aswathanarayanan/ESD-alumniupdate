@@ -31,4 +31,8 @@ public class AlumniService {
         Alumni alu=alumniDAO.updatealumicontact(id,alumni);
         return alu;
     }
+
+    public Alumni loginalumni(Alumni alumni){
+        return alumniDAO.loginalumni(alumni);
+    }
 }
