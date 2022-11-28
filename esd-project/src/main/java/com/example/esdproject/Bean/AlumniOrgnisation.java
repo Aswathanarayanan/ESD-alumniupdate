@@ -8,6 +8,7 @@ public class AlumniOrgnisation {
 
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column

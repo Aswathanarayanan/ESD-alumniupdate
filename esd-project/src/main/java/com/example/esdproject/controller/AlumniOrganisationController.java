@@ -2,14 +2,30 @@ package com.example.esdproject.controller;
 
 import com.example.esdproject.Bean.AlumniEducation;
 import com.example.esdproject.Bean.AlumniOrgnisation;
+import com.example.esdproject.Bean.Organisation;
 import com.example.esdproject.Service.AlumniOrganisationService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.io.PrintStream;
+import java.util.List;
+import java.util.ListIterator;
+
 @Path("/alumniorganisation")
 public class AlumniOrganisationController {
     AlumniOrganisationService alumniOrganisationService =new AlumniOrganisationService();
+
+//    @GET
+//    @Path("/getorglist")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response getOrgList(@QueryParam("id") Integer id){
+//        List<Organisation> organisationList=alumniOrganisationService.getorglidt(id);
+//        System.out.println("Got the org list");
+//        if(organisationList.size()==0)
+//            return Response.status(404).entity(organisationList).build();
+//        return Response.status(200).entity(organisationList).build();
+//    }
 
     @POST
     @Path("/add")
@@ -44,5 +60,15 @@ public class AlumniOrganisationController {
         if(orgnisation!=null)
             return Response.status(200).entity("Success").build();
         return Response.status(404).entity("failed").build();
+    }
+
+    @GET
+    @Path("/getalumniorg")
+    public Response getalumniorg(@QueryParam("id")Integer id){
+        List<AlumniOrgnisation> res=alumniOrganisationService.getalumniorg(id);
+        System.out.println("alumniorglist");
+        if(res.size()!=0)
+            return Response.status(200).entity(res).build();
+        return Response.status(404).entity(res).build();
     }
 }

@@ -11,6 +11,13 @@ import ContactUpdate from './components/Contact'
 import ContactService from './services/contact'
 import Education from './components/Education'
 import Educationservice from './services/education'
+import Organization from './components/Organization'
+import OrglistService from './services/orglist'
+import OrganizationService from './services/oraganisation'
+import Orgupdateservice from './services/organisationupdate'
+import Organisationupdate from './components/Organisationupdate'
+import Organisationdelete from './components/Organisationdelete'
+
 
 const App = () => {
   // user state will store the logged in user object, if no login has been done yet then it will be null
@@ -23,7 +30,8 @@ const App = () => {
   // login, signup, watchlist creation, etc.
   const [ notification, setNotification ] = useState(null)
   const [ notificationType, setNotificationType ] = useState(null)
-
+  const [orglist , setOrglist] = useState(null)
+  const [orgupdatelist , setupdatelist] = useState(null)
   // Create a notification at the top of the screen with given message for 10 seconds 
   // Notifications are of two types, "error" and "success"
   // The appearance of these two notifications can be adjusted via the index.css file
@@ -44,8 +52,19 @@ const App = () => {
       setUser(userObject)
       window.localStorage.setItem('loggedInUser', JSON.stringify(userObject))
       
-      notificationHandler(`Logged in successfully as ${userObject.firstName}`, 'success')
-      setBills([])
+      notificationHandler(`Logged in successfully as ${userObject.email}`, 'success')
+      
+      const orglistObject = await OrglistService.orglist()
+      setOrglist(orglistObject)
+      window.localStorage.setItem('orgs', JSON.stringify(orglistObject))
+      
+      notificationHandler(`Logged in successfully as ${orglistObject[0].name}`, 'success')
+
+      const orgupdatelistObject = await Orgupdateservice.orgupd(userObject)
+      setupdatelist(orgupdatelistObject)
+      window.localStorage.setItem('orgsupd', JSON.stringify(orgupdatelistObject))
+      //notificationHandler(`Logged in successfully as ${orgupdatelistObject[0].position}`, 'success')
+
     }
     catch (exception) {
       notificationHandler(`Log in failed, check username and password entered`, 'error')
@@ -78,6 +97,53 @@ const App = () => {
     }
   }
 
+  const handleOrganisationAdd = async (details,oraganisation) => {
+    //notificationHandler(`Update ${oraganisation}`, 'success')
+    try {
+      const updateresponse = await OrganizationService.orgadd(details,user,oraganisation)
+      // setUser(userObject)
+      notificationHandler(`Organisation updated successfully response ${updateresponse}`, 'success')
+      
+      const orgupdatelistObject = await Orgupdateservice.orgupd(user)
+      setupdatelist(orgupdatelistObject)
+      window.localStorage.setItem('orgsupd', JSON.stringify(orgupdatelistObject))
+      notificationHandler(`Logged in successfully as ${orgupdatelistObject[0].position}`, 'success')
+
+    }
+    catch (exception) {
+      notificationHandler(`Update failed ${oraganisation}`, 'error')
+    }
+  }
+
+  const handleOrganisationupd = async (details,oraganisation) => {
+    //notificationHandler(`Update ${oraganisation}`, 'success')
+    try {
+      const updateresponse = await OrganizationService.orgupd(details,oraganisation)
+      // setUser(userObject)
+      notificationHandler(`Organisation updated successfully response ${updateresponse}`, 'success')
+     
+    }
+    catch (exception) {
+      notificationHandler(`Update failed ${oraganisation}`, 'error')
+    }
+  }
+
+  const handleOrganisationdelete = async (oraganisation) => {
+    //notificationHandler(`Update ${oraganisation}`, 'success')
+    try {
+      const updateresponse = await OrganizationService.orgdel(oraganisation)
+      // setUser(userObject)
+      notificationHandler(`Organisation updated successfully response ${updateresponse}`, 'success')
+      
+      const orgupdatelistObject = await Orgupdateservice.orgupd(user)
+      setupdatelist(orgupdatelistObject)
+      window.localStorage.setItem('orgsupd', JSON.stringify(orgupdatelistObject))
+      notificationHandler(`Logged in successfully as ${orgupdatelistObject[0].position}`, 'success')
+    }
+    catch (exception) {
+      notificationHandler(`Update failed ${oraganisation}`, 'error')
+    }
+  }
   // Function that pays a bill using the billObject that is passed to the function
   const payBill = async (billObject) => {
     try {
@@ -117,6 +183,15 @@ const App = () => {
     const loggedInUser = window.localStorage.getItem('loggedInUser')
     if (loggedInUser)
       setUser(JSON.parse(loggedInUser))
+
+    const orgs = window.localStorage.getItem('orgs')
+    if(orgs)
+      setOrglist(JSON.parse(orgs))
+
+    const orgsupd = window.localStorage.getItem('orgsupd')
+    if(orgsupd)
+      setOrglist(JSON.parse(orgsupd))
+
   }, [])
 
   return (
@@ -166,10 +241,21 @@ const App = () => {
       {
         /* Show updates for the User when loggedin */
         user !== null &&
-        <Organization update={handleEducationupdate}
+        <Organization updateorg={handleOrganisationAdd} list={orglist}
           />
       }
-      
+      {
+        /* Show updates for the User when loggedin */
+        user !== null &&
+        <Organisationupdate orgupdate={handleOrganisationupd} list={orgupdatelist}
+          />
+      }
+      {
+        /* Show updates for the User when loggedin */
+        user !== null &&
+        <Organisationdelete orgdelete={handleOrganisationdelete} list={orgupdatelist}
+          />
+      }
     </div>
   )
 }

@@ -11,7 +11,24 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AlumniOrganisationDAOimpl implements AlumniOrganisationDAO {
+
+    public List<AlumniOrgnisation> getOrgofalumni(Integer id){
+        List<AlumniOrgnisation> res = new ArrayList<>();
+        try (Session session = HibernetSessionUtil.getSession()) {
+            for (
+                    final Object org : session
+                    .createQuery("FROM AlumniOrgnisation WHERE alumni.id =:id")
+                    .setParameter("id", id)
+                    .list()
+            )
+                res.add((AlumniOrgnisation) org);
+        }
+        return res;
+    }
     public boolean addalumniorg(AlumniOrgnisation alumniOrgnisation){
         try (Session session = HibernetSessionUtil.getSession()) {  // session created got access of hibernate session object
             Transaction transaction = session.beginTransaction();  // transaction initiated
